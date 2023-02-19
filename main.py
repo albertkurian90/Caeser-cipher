@@ -1,63 +1,32 @@
-alphabet = [
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-    'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-]
+from time import sleep
+import util as u
+
 FLAG = True
+
 while FLAG:
-    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
-    text = input("Type your message:\n").lower()
-    shift = int(input("Type the shift number:\n"))
-    if shift > 26:
-        shift = shift % 26
+    direction = input(
+        "Type 'e' to encrypt, type 'd' to decrypt, type 'q' to quit:\n")
+    if direction != "q":
+        text = input("Type your message:\n").lower()
+        shift = int(input("Type the shift number:\n"))
 
-    def encrypt(msg, shift_count):
-        """
-            Function to enrypt a given input with ceasar encryption method.
+        # Allowing all postive integers to be passed as shift number
+        if shift > 26:
+            shift = shift % 26
 
-            Args:
-                text (str): Message to be encoded.
-                shift (int): Number of character shifts for cipher.
+        if direction == "e":
+            encoded_text = u.encrypt(text, shift)
+            print(f"Encoded message is:\n{encoded_text}\n")
+            sleep(1)
+        elif direction == "d":
+            print(f"Decoded message is:\n{u.decrypt(text, shift)}\n")
+            sleep(1)
+        else:
+            print("Sorry invalid input\n")
 
-            Returns:
-                str: Encoded message.
-        """
-        encrypted_text = ""
-        for character in msg:
-            position = alphabet.index(character)
-            encrypted_char_position = position + shift_count
-            while encrypted_char_position > 25:
-                encrypted_char_position -= 26
-            encrypted_char = alphabet[encrypted_char_position]
-            encrypted_text += encrypted_char
-        return encrypted_text
-
-    def decrypt(msg, shift_count):
-        """
-            Function to decrypt a given input with ceasar decryption method.
-
-            Args:
-                text (str): Message to be decoded.
-                shift (int): Number of character shifts for cipher.
-
-            Returns:
-                str: Decoded message.
-        """
-        decrypted_text = ""
-        for character in msg:
-            position = alphabet.index(character)
-            decrypted_char_position = position - shift_count
-            while decrypted_char_position > 25:
-                decrypted_char_position -= 26
-            decrypted_char = alphabet[decrypted_char_position]
-            decrypted_text += decrypted_char
-        return decrypted_text
-
-    if direction == "e":
-        encoded_text = encrypt(text, shift)
-        print(encoded_text)
-    elif direction == "d":
-        print(decrypt(text, shift))
-    elif direction == "q":
-        FLAG = False
+        clear_flag = input(
+            "Would you like a clean terminal?\n Enter 'y' for Yes, type any for No\n")
+        if clear_flag == "y":
+            u.clear_terminal()
     else:
-        print("Sorry invalid input")
+        FLAG = False
