@@ -1,8 +1,9 @@
 from time import sleep
+from art import tprint
 import util as u
 
 FLAG = True
-
+tprint("CEASAR\nCIPHER")
 while FLAG:
     direction = input(
         "Type 'e' to encrypt, type 'd' to decrypt, type 'q' to quit:\n")
@@ -16,6 +17,7 @@ while FLAG:
 
         if direction == "e":
             encoded_text = u.encrypt(text, shift)
+            
             print(f"Encoded message is:\n{encoded_text}\n")
             sleep(1)
         elif direction == "d":

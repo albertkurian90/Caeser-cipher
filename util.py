@@ -19,11 +19,14 @@ def encrypt(msg, shift_count):
     """
     encrypted_text = ""
     for character in msg:
-        position = alphabet.index(character)
-        encrypted_char_position = position + shift_count
-        while encrypted_char_position > 25:
-            encrypted_char_position -= 26
-        encrypted_char = alphabet[encrypted_char_position]
+        if character not in alphabet:
+            encrypted_char = character
+        else:
+            position = alphabet.index(character)
+            encrypted_char_position = position + shift_count
+            while encrypted_char_position > 25:
+                encrypted_char_position -= 26
+            encrypted_char = alphabet[encrypted_char_position]
         encrypted_text += encrypted_char
     return encrypted_text
 
